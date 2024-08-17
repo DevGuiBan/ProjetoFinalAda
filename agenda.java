@@ -44,11 +44,16 @@ public class agenda {
                     telefone = input.nextLine();
                     boolean contatoExiste = false;
                     for (int i = 0; i < agendaTelefone.length; i++) {
-                        if (agendaTelefone[i].equals(telefone)) {
-                            detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
-                            contatoExiste = true;
+                        try{
+                            if (agendaTelefone[i].equals(telefone)) {
+                                detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
+                                contatoExiste = true;
+                                break;
+                            }
+                        }catch (NullPointerException e){
                             break;
                         }
+
                     }
                     if (!contatoExiste) {
                         System.out.println("Não existe o contato buscado com o telefone: " + telefone);
@@ -58,52 +63,98 @@ public class agenda {
                     System.out.println("Informe o telefone que deseja editar: ");
                     telefone = input.nextLine();
                     boolean contatoParaEdicaoExiste = false;
-                    for (int i = 0; i < agendaTelefone.length; i++) {
-                        if (agendaTelefone[i].equals(telefone)) {
-                            detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
-                            contatoParaEdicaoExiste = true;
-                            escolha = 0;
-                            while (escolha != 4) {
-                                menuEdicao();
-                                escolha = input.nextInt();
-                                input.nextLine();
-                                switch (escolha) {
-                                    case 1:
-                                        String nomeEditado = agendaNome[i];
-                                        System.out.println("Informe o nome que deseja cadastrar: ");
-                                        agendaNome[i] = input.nextLine();
-                                        System.out.println("O nome " + nomeEditado + " foi alterado para " + agendaNome[i] + " com sucesso!");
-                                        break;
-                                    case 2:
-                                        String telefoneEditado = agendaTelefone[i];
-                                        System.out.println("Informe o telefone que deseja cadastrar: ");
-                                        agendaTelefone[i] = input.nextLine();
-                                        System.out.println("O telefone " + telefoneEditado + " foi alterado para " + agendaTelefone[i] + " com sucesso!");
-                                        break;
-                                    case 3:
-                                        String emailEditado = agendaEmail[i];
-                                        System.out.println("Informe o email que deseja cadastrar: ");
-                                        agendaEmail[i] = input.nextLine();
-                                        System.out.println("O email " + emailEditado + " foi alterado para " + agendaEmail[i] + " com sucesso!");
-                                        break;
-                                    case 4:
-                                        System.out.println("Saindo....");
-                                        break;
+                    try{
+                        for (int i = 0; i < agendaTelefone.length; i++) {
+                            if (agendaTelefone[i].equals(telefone)) {
+                                detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
+                                contatoParaEdicaoExiste = true;
+                                escolha = 0;
+                                while (escolha != 4) {
+                                    menuEdicao();
+                                    escolha = input.nextInt();
+                                    input.nextLine();
+                                    switch (escolha) {
+                                        case 1:
+                                            String nomeEditado = agendaNome[i];
+                                            System.out.println("Informe o nome que deseja cadastrar: ");
+                                            agendaNome[i] = input.nextLine();
+                                            System.out.println("O nome " + nomeEditado + " foi alterado para " + agendaNome[i] + " com sucesso!");
+                                            break;
+                                        case 2:
+                                            String telefoneEditado = agendaTelefone[i];
+                                            System.out.println("Informe o telefone que deseja cadastrar: ");
+                                            agendaTelefone[i] = input.nextLine();
+                                            System.out.println("O telefone " + telefoneEditado + " foi alterado para " + agendaTelefone[i] + " com sucesso!");
+                                            break;
+                                        case 3:
+                                            String emailEditado = agendaEmail[i];
+                                            System.out.println("Informe o email que deseja cadastrar: ");
+                                            agendaEmail[i] = input.nextLine();
+                                            System.out.println("O email " + emailEditado + " foi alterado para " + agendaEmail[i] + " com sucesso!");
+                                            break;
+                                        case 4:
+                                            System.out.println("Saindo....");
+                                            break;
+                                    }
                                 }
+                                System.out.println(">>>>  Alteração finalizada <<<<");
+                                detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
+                                break;
                             }
-                            System.out.println(">>>>  Alteração finalizada <<<<");
-                            detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
-                            break;
                         }
+                    }catch (NullPointerException e){
+                        if (!contatoParaEdicaoExiste){
+                            System.out.println("Não existe o contato com o telefone: " + telefone + " que deseja editar!");
+                        }
+                        break;
                     }
                     if (!contatoParaEdicaoExiste){
                         System.out.println("Não existe o contato com o telefone: " + telefone + " que deseja editar!");
                     }
                     break;
                 case 4:
+                    System.out.println("Informe o telefone do contato que deseja deletar: ");
+                    telefone = input.nextLine();
+                    boolean contatoParaDelExiste = false;
+                    for (int i = 0, j = i + 1; i < agendaTelefone.length; i++) {
+                        try {
+                            if (agendaTelefone[i].equals(telefone))  {
+                                if (agendaId[j] > 0) {
+                                    agendaId[i] = agendaId[j - 1];
+                                    agendaTelefone[i] = agendaTelefone[j];
+                                    agendaEmail[i] = agendaEmail[j];
+                                    agendaNome[i] = agendaNome[j];
+                                }
+                                contatoParaDelExiste = true;
+                            }
+                        }catch (NullPointerException e){
+                            break;
+                        }
+
+                        if (agendaId[j] == 0) {
+                            agendaId[i] = 0;
+                            agendaTelefone[i] = null;
+                            agendaEmail[i] = null;
+                            agendaNome[i] = null;
+                        }
+                        if (j < agendaTelefone.length && j != 4) {
+                            j++;
+                        }
+                    }
+                    if (!contatoParaDelExiste) {
+                        System.out.println("Não existe o contato buscado com o telefone: " + telefone);
+                    }
+                    if (contatoParaDelExiste) {
+                        System.out.println("Foi deletado com sucesso o contato com o telefone: " + telefone);
+                        listarAgenda(agendaId, agendaNome, agendaTelefone, agendaEmail, agendaTelefone);
+                    }
                     break;
                 case 5:
-                    listarAgenda(agendaId, agendaNome, agendaTelefone, agendaEmail, agendaTelefone);
+                    if (agendaId[0] == 0){
+                        System.out.println("Não existe nenhum contato na agenda!");
+                    }else{
+                        listarAgenda(agendaId, agendaNome, agendaTelefone, agendaEmail, agendaTelefone);
+                    }
                     break;
                 case 6:
                     System.out.println("Saindo....");
