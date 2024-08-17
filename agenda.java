@@ -21,10 +21,7 @@ public class agenda {
                     System.out.println("Informe o telefone: ");
                     telefone = input.nextLine();
                     for (int i = 0; i < agendaTelefone.length; i++) {
-                        if (agendaTelefone[i].equals(telefone)) {
-                            System.out.println("O telefone já existe na agenda!");
-                            break;
-                        }else if (agendaTelefone[i].isEmpty()) {
+                        if (agendaTelefone[i] == null){
                             System.out.println("Informe o nome: ");
                             String nome = input.nextLine();
                             System.out.println("Informe o e-mail: ");
@@ -36,24 +33,35 @@ public class agenda {
                             System.out.println("Contato adicionado na agenda com sucesso!");
                             detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
                             break;
+                        }else if (agendaTelefone[i].equals(telefone)) {
+                            System.out.println("O telefone já existe na agenda!");
+                            break;
                         }
                     }
+                    break;
                 case 2:
                     System.out.println("Informe o telefone que deseja buscar: ");
                     telefone = input.nextLine();
+                    boolean contatoExiste = false;
                     for (int i = 0; i < agendaTelefone.length; i++) {
                         if (agendaTelefone[i].equals(telefone)) {
                             detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
-                        }else {
-                            System.out.println("Não existe o contato buscado com o telefone: " + telefone);
+                            contatoExiste = true;
+                            break;
                         }
                     }
+                    if (!contatoExiste) {
+                        System.out.println("Não existe o contato buscado com o telefone: " + telefone);
+                    }
+                    break;
                 case 3:
                     System.out.println("Informe o telefone que deseja editar: ");
                     telefone = input.nextLine();
+                    boolean contatoParaEdicaoExiste = false;
                     for (int i = 0; i < agendaTelefone.length; i++) {
                         if (agendaTelefone[i].equals(telefone)) {
                             detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
+                            contatoParaEdicaoExiste = true;
                             escolha = 0;
                             while (escolha != 4) {
                                 menuEdicao();
@@ -85,14 +93,18 @@ public class agenda {
                             }
                             System.out.println(">>>>  Alteração finalizada <<<<");
                             detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
-                        }else {
-                            System.out.println("Não existe o contato com o telefone: " + telefone + " que deseja editar!");
+                            break;
                         }
                     }
+                    if (!contatoParaEdicaoExiste){
+                        System.out.println("Não existe o contato com o telefone: " + telefone + " que deseja editar!");
+                    }
+                    break;
                 case 4:
                     break;
                 case 5:
                     listarAgenda(agendaId, agendaNome, agendaTelefone, agendaEmail, agendaTelefone);
+                    break;
                 case 6:
                     System.out.println("Saindo....");
                     break;
@@ -117,14 +129,19 @@ public class agenda {
     public static void detalharContato(int id, String nome, String tel, String email) {
         System.out.println(">>>>  Contato <<<<");
         System.out.println("Id   |   Nome         |   Telefone      |   E-mail");
-        System.out.println(id + "   |   " + "   |   " + nome + "   |   " + tel + "   |   " + email);
+        System.out.println(id + "   |   " + nome + "   |   " + tel + "   |   " + email);
     }
 
     public static void listarAgenda(int[] id, String[] nome, String[] tel, String[] email, String[] agenda) {
         System.out.println(">>>>  Contato <<<<");
         System.out.println("Id   |   Nome         |   Telefone      |   E-mail");
         for (int i = 0; i < agenda.length; i++){
-            System.out.println(id[i] + "   |   " + "   |   " + nome[i] + "   |   " + tel[i] + "   |   " + email[i]);
+            if (id[i] >= 1){
+                System.out.println(id[i] + "   |   " + nome[i] + "   |   " + tel[i] + "   |   " + email[i]);
+            }else {
+                break;
+            }
+
         }
     }
 
