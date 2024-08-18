@@ -18,25 +18,21 @@ public class agenda {
 
             switch (escolha) {
                 case 1:
-                    System.out.println("Informe o telefone: ");
-                    telefone = input.nextLine();
-                    for (int i = 0; i < agendaTelefone.length; i++) {
-                        if (agendaTelefone[i] == null){
-                            System.out.println("Informe o nome: ");
-                            String nome = input.nextLine();
-                            System.out.println("Informe o e-mail: ");
-                            String email = input.nextLine();
-                            agendaId[i] = i + 1;
-                            agendaTelefone[i] = telefone;
-                            agendaNome[i] = nome;
-                            agendaEmail[i] = email;
+                    telefone = solicitarTelefone(input);
+                    int indiceLivre = encontrarIndiceLivre(agendaTelefone);
+
+                    if (indiceLivre != -1) {
+                        if (!telefoneExiste(telefone, agendaTelefone)) {
+                            String nome = solicitarNome(input);
+                            String email = solicitarEmail(input);
+                            salvarContato(indiceLivre, telefone, nome, email, agendaId, agendaTelefone, agendaNome, agendaEmail);
                             System.out.println("Contato adicionado na agenda com sucesso!");
-                            detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
-                            break;
-                        }else if (agendaTelefone[i].equals(telefone)) {
+                            detalharContato(agendaId[indiceLivre], agendaNome[indiceLivre], agendaTelefone[indiceLivre], agendaEmail[indiceLivre]);
+                        } else {
                             System.out.println("O telefone já existe na agenda!");
-                            break;
                         }
+                    } else {
+                        System.out.println("Agenda cheia!");
                     }
                     break;
                 case 2:
@@ -194,6 +190,7 @@ public class agenda {
             }
 
         }
+
     }
 
     public static void menuEdicao() {
@@ -203,5 +200,47 @@ public class agenda {
         System.out.println("3 - Editar e-mail");
         System.out.println("4 - Sair");
     }
+    //Codigo refatorado do case 1
+    public static String solicitarTelefone(Scanner input) {
+        System.out.println("Informe o telefone: ");
+        return input.nextLine();
+    }
+
+    public static String solicitarNome(Scanner input) {
+        System.out.println("Informe o nome: ");
+        return input.nextLine();
+    }
+
+    public static String solicitarEmail(Scanner input) {
+        System.out.println("Informe o e-mail: ");
+        return input.nextLine();
+    }
+
+    public static int encontrarIndiceLivre(String[] agendaTelefone) {
+        for (int i = 0; i < agendaTelefone.length; i++) {
+            if (agendaTelefone[i] == null) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static boolean telefoneExiste(String telefone, String[] agendaTelefone) {
+        for (String tel : agendaTelefone) {
+            if (telefone.equals(tel)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void salvarContato(int indice, String telefone, String nome, String email, int[] agendaId, String[] agendaTelefone, String[] agendaNome, String[] agendaEmail) {
+        agendaId[indice] = indice + 1;
+        agendaTelefone[indice] = telefone;
+        agendaNome[indice] = nome;
+        agendaEmail[indice] = email;
+    }
+
+
 
 }
