@@ -57,7 +57,7 @@ public class agenda {
                     }
                     break;
                 case 3:
-                    System.out.println("\n\uD83D\uDE7E\uD83D\uDE7E\uD83D\uDE7E EDITAR CONTATO \uD83D\uDE7F\uD83D\uDE7F\uD83D\uDE7F");;
+                    System.out.println("\n\uD83D\uDE7E\uD83D\uDE7E\uD83D\uDE7E EDITAR CONTATO \uD83D\uDE7F\uD83D\uDE7F\uD83D\uDE7F");
                     System.out.print("\uD83D\uDF82 Digite o telefone do contato que deseja editar: ");
                     telefone = input.nextLine();
                     boolean contatoParaEdicaoExiste = false;
