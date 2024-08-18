@@ -164,13 +164,13 @@ public class agenda {
     }
 
     public static void menuAgenda() {
-        System.out.println(">>>>  Menu Contato <<<<");
-        System.out.println("1 - Adicionar Contato");
-        System.out.println("2 - Detalhar Contato");
-        System.out.println("3 - Editar Contato");
-        System.out.println("4 - Remover Contato");
-        System.out.println("5 - Listar Agenda");
-        System.out.println("6 - Sair");
+        System.out.println("\n  \uD83D\uDE7C\uD83D\uDE7C\uD83D\uDE7C \uD835\uDE3C\uD835\uDE42\uD835\uDE40\uD835\uDE49\uD835\uDE3F\uD835\uDE3C \uD835\uDE3F\uD835\uDE40 \uD835\uDE3E\uD835\uDE4A\uD835\uDE49\uD835\uDE4F\uD835\uDE3C\uD835\uDE4F\uD835\uDE4A\uD835\uDE4E \uD83D\uDE7D\uD83D\uDE7D\uD83D\uDE7D");
+        System.out.println("    [1] Adicionar Contato");
+        System.out.println("    [2] Detalhar Contato");
+        System.out.println("    [3] Editar Contato");
+        System.out.println("    [4] Remover Contato");
+        System.out.println("    [5] Listar Contatos");
+        System.out.println("    [6] Sair");
     }
 
     public static void detalharContato(int id, String nome, String tel, String email) {
