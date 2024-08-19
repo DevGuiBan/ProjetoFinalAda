@@ -36,25 +36,7 @@ public class agenda {
                     }
                     break;
                 case 2:
-                    System.out.print("\uD83D\uDE7E\uD83D\uDE7E\uD83D\uDE7E DETALHAR CONTATO \uD83D\uDE7F\uD83D\uDE7F\uD83D\uDE7F");
-                    System.out.print("\n\uD83D\uDF82\uD83D\uDF82 Digite o número do telefone: ");
-                    telefone = input.nextLine();
-                    boolean contatoExiste = false;
-                    for (int i = 0; i < agendaTelefone.length; i++) {
-                        try{
-                            if (agendaTelefone[i].equals(telefone)) {
-                                detalharContato(agendaId[i], agendaNome[i], agendaTelefone[i], agendaEmail[i]);
-                                contatoExiste = true;
-                                break;
-                            }
-                        }catch (NullPointerException e){
-                            break;
-                        }
-
-                    }
-                    if (!contatoExiste) {
-                        System.out.println("\n  \uD83D\uDDD9 Contato não encontrado!");
-                    }
+                    detalharContato(input, agendaId, agendaNome, agendaTelefone, agendaEmail);
                     break;
                 case 3:
                     System.out.println("\n\uD83D\uDE7E\uD83D\uDE7E\uD83D\uDE7E EDITAR CONTATO \uD83D\uDE7F\uD83D\uDE7F\uD83D\uDE7F");
@@ -117,37 +99,38 @@ public class agenda {
                     System.out.print("\uD83D\uDF82 Digite o telefone do contato que deseja remover: ");
                     telefone = input.nextLine();
                     boolean contatoParaDelExiste = false;
-                    for (int i = 0, j = i + 1; i < agendaTelefone.length; i++) {
-                        try {
-                            if (agendaTelefone[i].equals(telefone))  {
-                                if (agendaId[j] > 0) {
-                                    agendaId[i] = agendaId[j - 1];
-                                    agendaTelefone[i] = agendaTelefone[j];
-                                    agendaEmail[i] = agendaEmail[j];
-                                    agendaNome[i] = agendaNome[j];
-                                }
-                                contatoParaDelExiste = true;
-                            }
-                        }catch (NullPointerException e){
+
+                    int indiceParaRemover = -1;
+                    for (int i = 0; i < agendaTelefone.length; i++) {
+                        if (agendaTelefone[i] != null && agendaTelefone[i].equals(telefone)) {
+                            indiceParaRemover = i;
+                            contatoParaDelExiste = true;
                             break;
                         }
+                    }
 
-                        if (agendaId[j] == 0) {
-                            agendaId[i] = 0;
-                            agendaTelefone[i] = null;
-                            agendaEmail[i] = null;
-                            agendaNome[i] = null;
-                        }
-                        if (j < agendaTelefone.length && j != 4) {
-                            j++;
-                        }
-                    }
-                    if (!contatoParaDelExiste) {
-                        System.out.println(" \uD83D\uDDD9 Não existe o contato buscado com o telefone: " + telefone);
-                    }
                     if (contatoParaDelExiste) {
+                        for (int i = indiceParaRemover; i < agendaTelefone.length - 1; i++) {
+                            agendaId[i] = agendaId[i + 1];
+                            agendaTelefone[i] = agendaTelefone[i + 1];
+                            agendaNome[i] = agendaNome[i + 1];
+                            agendaEmail[i] = agendaEmail[i + 1];
+                        }
+
+                        agendaId[agendaTelefone.length - 1] = 0;
+                        agendaTelefone[agendaTelefone.length - 1] = null;
+                        agendaNome[agendaTelefone.length - 1] = null;
+                        agendaEmail[agendaTelefone.length - 1] = null;
+
+                        for (int i = 0; i < agendaId.length; i++) {
+                            if (agendaId[i] != 0) {
+                                agendaId[i] = i + 1;
+                            }
+                        }
+
                         System.out.println(" \uD83D\uDDF8 Contato " + telefone + " foi deletado com sucesso!");
-                        //listarAgenda(agendaId, agendaNome, agendaTelefone, agendaEmail, agendaTelefone);
+                    } else {
+                        System.out.println(" \uD83D\uDDD9 Não existe o contato buscado com o telefone: " + telefone);
                     }
                     break;
                 case 5:
@@ -248,6 +231,34 @@ public class agenda {
         agendaNome[indice] = nome;
         agendaEmail[indice] = email;
     }
+    //Codigo refatorado do case 2
+    public static void detalharContato(Scanner input, int[] agendaId, String[] agendaNome, String[] agendaTelefone, String[] agendaEmail) {
+        System.out.print("\uD83D\uDE7E\uD83D\uDE7E\uD83D\uDE7E DETALHAR CONTATO \uD83D\uDE7F\uD83D\uDE7F\uD83D\uDE7F");
+        System.out.print("\n\uD83D\uDF82\uD83D\uDF82 Digite o número do telefone: ");
+        String telefone = input.nextLine();
+
+        int indiceContato = encontrarContato(telefone, agendaTelefone);
+        if (indiceContato != -1) {
+            exibirContato(agendaId[indiceContato], agendaNome[indiceContato], agendaTelefone[indiceContato], agendaEmail[indiceContato]);
+        } else {
+            System.out.println("\n  \uD83D\uDDD9 Contato não encontrado!");
+        }
+    }
+
+    public static int encontrarContato(String telefone, String[] agendaTelefone) {
+        for (int i = 0; i < agendaTelefone.length; i++) {
+            if (telefone.equals(agendaTelefone[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void exibirContato(int id, String nome, String telefone, String email) {
+        System.out.println("\nID | Nome            | Telefone          | E-mail");
+        System.out.printf("%-3d| %-16s| %-18s| %s\n", id, nome, telefone, email);
+    }
+
 
 
 
