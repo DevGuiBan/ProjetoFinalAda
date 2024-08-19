@@ -2,7 +2,7 @@
 
 ## Desafios Enfrentados
 
-- **Trabalhar utilizando e manipulando apenas arrays**: Um dos principais desafios do projeto foi a manipulação de arrays para gerenciar contatos, especialmente quando se tratava de implementar as funções de adicionar, editar e remover contatos sem usar estruturas de dados mais avançadas, como listas ou mapas. Além disso, o tratamento de erros dificultou a equipe porque enfatizava que era necessário mais cuidado e compreensão ao lidar com exceções e evitar falhas no sistema, no fim optamos por trabalhar com estruturas condicionais mantendo o projeto cumprindo sua principal funcção e tratando alguns casos.
+- **Trabalhar utilizando e manipulando apenas arrays**: Um dos principais desafios do projeto foi a manipulação de arrays para gerenciar contatos, especialmente quando se tratava de implementar as funções de adicionar, editar e remover contatos sem usar estruturas de dados mais avançadas, como listas ou mapas. Além disso, o tratamento de erros dificultou a equipe porque enfatizava que era necessário mais cuidado e compreensão ao lidar com exceções e evitar falhas no sistema, no fim optamos por trabalhar mais com estruturas condicionais mantendo o projeto cumprindo sua principal funcção e usando 'try-catch' em alguns casos.
 
 ## Aspectos Mais Interessantes
 
